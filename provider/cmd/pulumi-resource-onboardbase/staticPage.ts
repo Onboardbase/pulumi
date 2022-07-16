@@ -16,64 +16,82 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
 export interface StaticPageArgs {
-    /**
-     * The HTML content for index.html.
-     */
-    indexContent: pulumi.Input<string>;
+  /**
+   * The HTML content for index.html.
+   */
+  indexContent: pulumi.Input<string>;
 }
 
 export class StaticPage extends pulumi.ComponentResource {
-    public readonly bucket: aws.s3.Bucket;
-    public readonly websiteUrl: pulumi.Output<string>;
+  public readonly bucket: aws.s3.Bucket;
+  public readonly websiteUrl: pulumi.Output<string>;
 
-    constructor(name: string, args: StaticPageArgs, opts?: pulumi.ComponentResourceOptions) {
-        super("xyz:index:StaticPage", name, args, opts);
+  constructor(
+    name: string,
+    args: StaticPageArgs,
+    opts?: pulumi.ComponentResourceOptions
+  ) {
+    super("onboardbase:index:StaticPage", name, args, opts);
 
-        // Create a bucket and expose a website index document.
-        const bucket = new aws.s3.Bucket(name, {
-            website: {
-                indexDocument: "index.html",
-            },
-        }, {
-            parent: this,
-        });
+    // Create a bucket and expose a website index document.
+    const bucket = new aws.s3.Bucket(
+      name,
+      {
+        website: {
+          indexDocument: "index.html",
+        },
+      },
+      {
+        parent: this,
+      }
+    );
 
-        // Create a bucket object for the index document.
-        new aws.s3.BucketObject(name, {
-            bucket: bucket,
-            key: "index.html",
-            content: args.indexContent,
-            contentType: "text/html",
-        }, {
-            parent: bucket
-        });
+    // Create a bucket object for the index document.
+    new aws.s3.BucketObject(
+      name,
+      {
+        bucket: bucket,
+        key: "index.html",
+        content: args.indexContent,
+        contentType: "text/html",
+      },
+      {
+        parent: bucket,
+      }
+    );
 
-        // Set the access policy for the bucket so all objects are readable.
-        new aws.s3.BucketPolicy("bucketPolicy", {
-            bucket: bucket.bucket,
-            policy: bucket.bucket.apply(name => JSON.stringify({
-                Version: "2012-10-17",
-                Statement: [
-                    {
-                        Effect: "Allow",
-                        Principal: "*",
-                        Action: ["s3:GetObject"],
-                        Resource: [
-                            `arn:aws:s3:::${name}/*`, // policy refers to bucket name explicitly
-                        ],
-                    },
+    // Set the access policy for the bucket so all objects are readable.
+    new aws.s3.BucketPolicy(
+      "bucketPolicy",
+      {
+        bucket: bucket.bucket,
+        policy: bucket.bucket.apply((name) =>
+          JSON.stringify({
+            Version: "2012-10-17",
+            Statement: [
+              {
+                Effect: "Allow",
+                Principal: "*",
+                Action: ["s3:GetObject"],
+                Resource: [
+                  `arn:aws:s3:::${name}/*`, // policy refers to bucket name explicitly
                 ],
-            })),
-        }, {
-            parent: bucket,
-        });
+              },
+            ],
+          })
+        ),
+      },
+      {
+        parent: bucket,
+      }
+    );
 
-        this.bucket = bucket;
-        this.websiteUrl = bucket.websiteEndpoint;
+    this.bucket = bucket;
+    this.websiteUrl = bucket.websiteEndpoint;
 
-        this.registerOutputs({
-            bucket,
-            websiteUrl: bucket.websiteEndpoint,
-        });
-    }
+    this.registerOutputs({
+      bucket,
+      websiteUrl: bucket.websiteEndpoint,
+    });
+  }
 }

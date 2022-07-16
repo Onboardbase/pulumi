@@ -113,3 +113,15 @@ build_python_sdk:: gen_python_sdk
 		sed -i.bak -e "s/\$${VERSION}/${PYPI_VERSION}/g" -e "s/\$${PLUGIN_VERSION}/${VERSION}/g" ./bin/setup.py && \
 		rm ./bin/setup.py.bak && \
 		cd ./bin && python3 setup.py build sdist
+
+set_path::
+	export PATH=$$PATH:$$PWD/bin
+
+build_project:: install_provider generate set_path install_nodejs_sdk
+
+test_nodejs:: build_project
+	yarn install
+	yarn link @pulumi/${PACK}
+	pulumi stack init test
+	pulumi config set aws:region us-east-1
+	pulumi up

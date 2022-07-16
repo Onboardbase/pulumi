@@ -1,3 +1,4 @@
+
 # Pulumi Component Provider Boilerplate (TypeScript)
 
 This repo is a boilerplate showing how to create a Pulumi component provider written in TypeScript. You can search-replace `xyz` with the name of your desired provider as a starting point for creating a component provider for your component resources.
@@ -34,6 +35,7 @@ If creating a provider for distribution to other users, they will need the `pulu
 
 ## Build and Test
 
+---
 ```bash
 # Build and install the provider
 make install_provider
@@ -53,12 +55,7 @@ $ pulumi stack init test
 $ pulumi config set aws:region us-east-1
 $ pulumi up
 ```
-
-## Naming
-
-The `xyz` provider's plugin must be named `pulumi-resource-xyz` (in the format `pulumi-resource-<provider>`).
-
-While the provider plugin must follow this naming convention, the SDK package naming can be customized. TODO explain.
+---
 
 ## Packaging
 
@@ -81,6 +78,7 @@ Let's look at the example `StaticPage` component resource in more detail.
 
 The example `StaticPage` component resource is defined in `schema.json`:
 
+---
 ```json
 "resources": {
     "xyz:index:StaticPage": {
@@ -111,6 +109,7 @@ The example `StaticPage` component resource is defined in `schema.json`:
     }
 }
 ```
+---
 
 The component resource's type token is `xyz:index:StaticPage` in the format of `<package>:<module>:<type>`. In this case, it's in the `xyz` package and `index` module. This is the same type token passed inside the implementation of `StaticPage` in `provider/cmd/pulumi-resource-xyz/staticPage.ts`, and also the same token referenced in `construct` in `provider/cmd/pulumi-resource-xyz/provider.ts`.
 
@@ -118,6 +117,7 @@ This component has a required `indexContent` input property typed as `string`, a
 
 Since this component returns a type from the `aws` provider, each SDK must reference the associated Pulumi `aws` SDK for the language. For the .NET, Node.js, and Python SDKs, dependencies are specified in the `language` section of the schema:
 
+---
 ```json
 "language": {
     "csharp": {
@@ -142,6 +142,7 @@ Since this component returns a type from the `aws` provider, each SDK must refer
     }
 }
 ```
+---
 
 For the Go SDK, dependencies are specified in the `sdk/go.mod` file.
 
@@ -149,7 +150,8 @@ For the Go SDK, dependencies are specified in the `sdk/go.mod` file.
 
 The implementation of this component is in `provider/cmd/pulumi-resource-xyz/staticPage.ts` and the structure of the component's inputs and outputs aligns with what is defined in `schema.json`:
 
-```typescript
+---
+```ts
 export interface StaticPageArgs {
     indexContent: pulumi.Input<string>;
 }
@@ -165,11 +167,13 @@ export class StaticPage extends pulumi.ComponentResource {
     }
 }
 ```
+---
 
 The provider makes this component resource available in the `construct` method in `provider/cmd/pulumi-resource-xyz/provider.ts`. When `construct` is called and the `type` argument is `xyz:index:StaticPage`, we create an instance of the `StaticPage` component resource and return its `URN` and outputs as its state.
 
 
-```typescript
+---
+```ts
 async function constructStaticPage(name: string, inputs: pulumi.Inputs,
     options: pulumi.ComponentResourceOptions): Promise<provider.ConstructResult> {
 
@@ -186,3 +190,4 @@ async function constructStaticPage(name: string, inputs: pulumi.Inputs,
     };
 }
 ```
+---

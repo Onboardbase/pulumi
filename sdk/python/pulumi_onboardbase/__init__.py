@@ -11,11 +11,11 @@ _utilities.register(
     resource_modules="""
 [
  {
-  "pkg": "xyz",
+  "pkg": "onboardbase",
   "mod": "index",
-  "fqn": "pulumi_xyz",
+  "fqn": "pulumi_onboardbase",
   "classes": {
-   "xyz:index:StaticPage": "StaticPage"
+   "onboardbase:index:StaticPage": "StaticPage"
   }
  }
 ]
@@ -23,9 +23,9 @@ _utilities.register(
     resource_packages="""
 [
  {
-  "pkg": "xyz",
-  "token": "pulumi:providers:xyz",
-  "fqn": "pulumi_xyz",
+  "pkg": "onboardbase",
+  "token": "pulumi:providers:onboardbase",
+  "fqn": "pulumi_onboardbase",
   "class": "Provider"
  }
 ]
