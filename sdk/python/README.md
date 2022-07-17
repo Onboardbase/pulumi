@@ -8,22 +8,6 @@ This repository is part of the [guide for authoring and publishing a Pulumi Pack
 
 Learn about the concepts behind [Pulumi Packages](https://www.pulumi.com/docs/guides/pulumi-packages/#pulumi-packages) and, more specifically, [Pulumi Components](https://www.pulumi.com/docs/intro/concepts/resources/components/)
 
-## Sample xyz Component Provider
-
-An example `StaticPage` [component resource](https://www.pulumi.com/docs/intro/concepts/resources/#components) is available in `provider/cmd/pulumi-resource-xyz/staticPage.ts`. This component creates a static web page hosted in an AWS S3 Bucket. There is nothing special about `StaticPage` -- it is a typical component resource written in TypeScript.
-
-The component provider makes component resources available to other languages. The implementation is in `provider/cmd/pulumi-resource-xyz/provider.ts`. Each component resource in the provider must have an implementation in the `construct` method to create an instance of the requested component resource and return its `URN` and state (outputs). There is an initial implementation that demonstrates an implementation of `construct` for the example `StaticPage` component.
-
-A code generator is available which generates SDKs in TypeScript, Python, Go and .NET which are also checked in to the `sdk` folder. The SDKs are generated from a schema in `schema.json`. This file should be kept aligned with the component resources supported by the component provider implementation.
-
-An example of using the `StaticPage` component in TypeScript is in `examples/simple`.
-
-Note that the provider plugin (`pulumi-resource-xyz`) must be on your `PATH` to be used by Pulumi deployments. In this case, `pulumi-resource-xyz` is a platform-specific binary that includes its Node.js dependency along with the provider code, created using [pkg](https://github.com/vercel/pkg). By default, running `make install` will create the binary specific to your host environment.
-
-After running `make install`, `pulumi-resource-xyz` will be available in the `./bin` directory. You can add this to your path in bash with `export PATH=$PATH:$PWD/bin`.
-
-If creating a provider for distribution to other users, they will need the `pulumi-resource-xyz` directory on their `PATH`. See the Packaging section below for more on distributing the provider to users.
-
 ## Prerequisites
 
 - Pulumi CLI
@@ -38,22 +22,7 @@ If creating a provider for distribution to other users, they will need the `pulu
 ---
 ```bash
 # Build and install the provider
-make install_provider
-
-# Regenerate SDKs
-make generate
-
-# Ensure the pulumi-provider-xyz script is on PATH
-$ export PATH=$PATH:$PWD/bin
-
-# Test Node.js SDK
-$ make install_nodejs_sdk
-$ cd examples/simple
-$ yarn install
-$ yarn link @pulumi/xyz
-$ pulumi stack init test
-$ pulumi config set aws:region us-east-1
-$ pulumi up
+make test_nodejs
 ```
 ---
 
@@ -61,14 +30,7 @@ $ pulumi up
 
 The provider plugin can be packaged into a tarball and hosted at a custom server URL to make it easier to distribute to users.
 
-Currently, five tarball files are necessary for Linux, macOS, and Windows (`pulumi-resource-xyz-v0.0.1-linux-amd64.tar.gz`, `pulumi-resource-xyz-v0.0.1-linux-arm64.tar.gz` `pulumi-resource-xyz-v0.0.1-darwin-amd64.tar.gz`, `pulumi-resource-xyz-v0.0.1-darwin-arm64.tar.gz`, `pulumi-resource-xyz-v0.0.1-windows-amd64.tar.gz`) each containing the same files: the platform-specific binary `pulumi-resource-xyz`, README and LICENSE. The fill set of binaries can be automatically generated using the command `make dist`.
-
-TODO explain custom server hosting in more detail.
-
-## Configuring CI and releases
-
-1. Follow the instructions laid out in the [deployment templates](./deployment-templates/README-DEPLOYMENT.md).
-
+Currently, five tarball files are necessary for Linux, macOS, and Windows (`pulumi-resource-onboardbase-v0.0.1-linux-amd64.tar.gz`, `pulumi-resource-onboardbase-v0.0.1-linux-arm64.tar.gz` `pulumi-resource-onboardbase-v0.0.1-darwin-amd64.tar.gz`, `pulumi-resource-onboardbase-v0.0.1-darwin-arm64.tar.gz`, `pulumi-resource-onboardbase-v0.0.1-windows-amd64.tar.gz`) each containing the same files: the platform-specific binary `pulumi-resource-onboardbase`, README and LICENSE. The fill set of binaries can be automatically generated using the command `make dist`.
 
 ## Example component
 
