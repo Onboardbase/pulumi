@@ -121,7 +121,7 @@ build_project:: install_provider generate set_path install_nodejs_sdk
 
 test_nodejs:: build_project
 	yarn install
-	yarn link @pulumi/${PACK}
+	yarn link @onboardbase/pulumi-onboardbase
 	export PATH=$$PATH:$$PWD/bin && \
 	cd examples/simple && \
 	pulumi up

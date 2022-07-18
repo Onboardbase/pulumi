@@ -1,4 +1,4 @@
-import * as onboardbase from "@pulumi/onboardbase";
+import * as onboardbase from "@onboardbase/pulumi-onboardbase";
 
 const onboardbaseSecrets = new onboardbase.Secrets("test:secrets", {
   apiKey: "92TWYPQAZUA94EYTY9T66A",

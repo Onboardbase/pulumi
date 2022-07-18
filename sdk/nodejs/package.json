@@ -1,18 +1,18 @@
 {
-  "name": "@onboardbase/pulumi-onboardbase",
-  "version": "${VERSION}",
-  "scripts": {
-    "build": "tsc",
-    "install": "node scripts/install-pulumi-plugin.js resource onboardbase ${VERSION}"
-  },
-  "dependencies": {
-    "@pulumi/pulumi": "latest",
-    "axios": "latest"
-  },
-  "devDependencies": {
-    "typescript": "^3.7.0"
-  },
-  "pulumi": {
-    "resource": true
-  }
+    "name": "@onboardbase/pulumi-onboardbase",
+    "version": "${VERSION}",
+    "scripts": {
+        "build": "tsc",
+        "install": "node scripts/install-pulumi-plugin.js resource onboardbase ${VERSION}"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "latest",
+        "axios": "latest"
+    },
+    "devDependencies": {
+        "typescript": "^3.7.0"
+    },
+    "pulumi": {
+        "resource": true
+    }
 }

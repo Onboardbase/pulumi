@@ -19,9 +19,11 @@ make test_nodejs
 ---
 ## Example Usage
 
+yarn install @onboardbase/pulumi-onboardbase
+
 ---
 ```go
-import * as onboardbase from "@pulumi/onboardbase";
+import * as onboardbase from "@onboardbase/pulumi-onboardbase";
 
 const onboardbaseSecrets = new onboardbase.Secrets("test:secrets", {
   apiKey: "92TWYPQAZUA**EYTY9T66A",

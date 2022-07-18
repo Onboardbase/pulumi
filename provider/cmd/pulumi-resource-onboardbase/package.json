@@ -1,5 +1,6 @@
 {
   "version": "${VERSION}",
+  "name": "@onboardbase/pulumi-onboardbase",
   "bin": "bin/index.js",
   "dependencies": {
     "@pulumi/pulumi": "^3.34.1",
