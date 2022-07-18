@@ -1,33 +1,40 @@
 {
   "name": "onboardbase",
   "resources": {
-    "onboardbase:index:StaticPage": {
+    "onboardbase:index:secrets": {
       "isComponent": true,
       "inputProperties": {
-        "indexContent": {
+        "project": {
           "type": "string",
-          "description": "The HTML content for index.html."
-        }
-      },
-      "requiredInputs": ["indexContent"],
-      "properties": {
-        "bucket": {
-          "$ref": "/aws/v4.0.0/schema.json#/resources/aws:s3%2Fbucket:Bucket",
-          "description": "The bucket resource."
+          "description": "The Project to pull secrets from"
         },
-        "websiteUrl": {
+        "environment": {
           "type": "string",
-          "description": "The website URL."
+          "description": "The environment to pull secrets from"
+        },
+        "apiKey": {
+          "type": "string",
+          "description": "API Key for authorization"
+        },
+        "passcode": {
+          "type": "string",
+          "description": "The API Key passcode for encryption"
         }
       },
-      "required": ["bucket", "websiteUrl"]
+      "requiredInputs": ["project", "environment", "apiKey", "passcode"],
+      "properties": {
+        "secrets": {
+          "type": "string",
+          "description": "The secrets"
+        }
+      },
+      "required": ["secrets"]
     }
   },
   "language": {
     "csharp": {
       "packageReferences": {
-        "Pulumi": "3.*",
-        "Pulumi.Aws": "5.*"
+        "Pulumi": "3.*"
       },
       "respectSchemaVersion": true
     },
@@ -38,7 +45,8 @@
     },
     "nodejs": {
       "dependencies": {
-        "@pulumi/aws": "^5.0.0"
+        "@pulumi/pulumi": "latest",
+        "axios": "latest"
       },
       "devDependencies": {
         "typescript": "^3.7.0"
@@ -47,8 +55,7 @@
     },
     "python": {
       "requires": {
-        "pulumi": ">=3.0.0,<4.0.0",
-        "pulumi-aws": ">=5.0.0,<6.0.0"
+        "pulumi": ">=3.0.0,<4.0.0"
       },
       "respectSchemaVersion": true
     }

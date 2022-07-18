@@ -122,6 +122,6 @@ build_project:: install_provider generate set_path install_nodejs_sdk
 test_nodejs:: build_project
 	yarn install
 	yarn link @pulumi/${PACK}
-	pulumi stack init test
-	pulumi config set aws:region us-east-1
+	export PATH=$$PATH:$$PWD/bin && \
+	cd examples/simple && \
 	pulumi up

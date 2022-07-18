@@ -6,7 +6,7 @@ from . import _utilities
 import typing
 # Export this package's modules as members:
 from .provider import *
-from .static_page import *
+from .secrets import *
 _utilities.register(
     resource_modules="""
 [
@@ -15,7 +15,7 @@ _utilities.register(
   "mod": "index",
   "fqn": "pulumi_onboardbase",
   "classes": {
-   "onboardbase:index:StaticPage": "StaticPage"
+   "onboardbase:index:secrets": "Secrets"
   }
  }
 ]

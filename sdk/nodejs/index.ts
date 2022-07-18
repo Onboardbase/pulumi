@@ -6,17 +6,17 @@ import * as utilities from "./utilities";
 
 // Export members:
 export * from "./provider";
-export * from "./staticPage";
+export * from "./secrets";
 
 // Import resources to register:
-import { StaticPage } from "./staticPage";
+import { Secrets } from "./secrets";
 
 const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "onboardbase:index:StaticPage":
-                return new StaticPage(name, <any>undefined, { urn })
+            case "onboardbase:index:secrets":
+                return new Secrets(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

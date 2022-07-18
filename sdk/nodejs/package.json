@@ -6,13 +6,11 @@
         "install": "node scripts/install-pulumi-plugin.js resource onboardbase ${VERSION}"
     },
     "dependencies": {
-        "@pulumi/aws": "^5.0.0"
+        "@pulumi/pulumi": "latest",
+        "axios": "latest"
     },
     "devDependencies": {
         "typescript": "^3.7.0"
-    },
-    "peerDependencies": {
-        "@pulumi/pulumi": "latest"
     },
     "pulumi": {
         "resource": true
