@@ -40,11 +40,11 @@
     },
     "go": {
       "generateResourceContainerTypes": true,
-      "importBasePath": "github.com/pulumi/pulumi-onboardbase/sdk/go/onboardbase",
+      "importBasePath": "github.com/pulumi/pulumi/sdk/go/onboardbase",
       "respectSchemaVersion": true
     },
     "nodejs": {
-      "packageName": "@onboardbase/pulumi-onboardbase",
+      "packageName": "@onboardbase/pulumi",
       "dependencies": {
         "@pulumi/pulumi": "latest",
         "axios": "latest"
